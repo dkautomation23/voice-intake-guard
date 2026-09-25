@@ -1,0 +1,10 @@
+$ curl -X POST https://voice-intake-guard.dkautomation.workers.dev/ -d CallSid=CAtest   # no signature
+HTTP 403
+$ curl -X POST https://voice-intake-guard.dkautomation.workers.dev/ -H 'X-Twilio-Signature: forged' -d CallSid=CAtest
+HTTP 403
+$ curl -X POST https://voice-intake-guard.dkautomation.workers.dev/ -H 'X-Twilio-Signature: <valid HMAC-SHA1>' -d CallSid=CAtest&Direction=outbound-api&From=...&To=...
+<?xml version="1.0" encoding="UTF-8"?><Response><Connect><Stream url="wss://api.elevenlabs.io/v1/convai/conversation"><Parameter name="conversation_id" value="conv_<redacted>" /></Stream></Connect></Response>
+HTTP 200
+$ # ELEVENLABS_AGENT_ID set to a non-existent agent, request signed with the real token
+<?xml version="1.0" encoding="UTF-8"?><Response><Say>Connecting you to a person.</Say><Dial>+XXXXXXXXXXXX</Dial></Response>
+HTTP 200

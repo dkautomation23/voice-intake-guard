@@ -1,0 +1,25 @@
+# wrangler tail, 25.09.2026, Twilio trial account calling through the Worker
+
+POST https://voice-intake-guard.dkautomation.workers.dev/
+  user-agent: Java-http-client/25.0.2
+  x-twilio-signature: ABSENT
+  -> HTTP 403
+  log: {"call":"CA…aac4","route":"refused","reason":"no signature","url":"https://voice-intake-guard.dkautomation.workers.dev/"}
+
+POST https://voice-intake-guard.dkautomation.workers.dev/
+  user-agent: curl/8.18.0
+  x-twilio-signature: ABSENT
+  -> HTTP 403
+  log: {"call":"CAprobe","route":"refused","reason":"no signature","url":"https://voice-intake-guard.dkautomation.workers.dev/"}
+
+POST https://voice-intake-guard.dkautomation.workers.dev/demo/<DEMO_PATH_TOKEN>
+  user-agent: Java-http-client/25.0.2
+  x-twilio-signature: ABSENT
+  -> HTTP 200
+  log: {"call":"CA…926b","route":"demo path, unsigned"} | {"call":"CA…926b","route":"agent","reason":"ok"}
+
+POST https://voice-intake-guard.dkautomation.workers.dev/
+  user-agent: curl/8.18.0
+  x-twilio-signature: present
+  -> HTTP 200
+  log: {"call":"CAfallbacktest","route":"fallback","reason":"agent http 404"}

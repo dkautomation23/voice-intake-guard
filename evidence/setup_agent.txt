@@ -1,0 +1,19 @@
+agent_id: agent_<redacted>
+privacy as read back: {
+  "record_voice": false,
+  "retention_days": -1,
+  "delete_transcript_and_pii": false,
+  "delete_audio": false,
+  "apply_to_existing_conversations": false,
+  "zero_retention_mode": false,
+  "nested_history_redaction": false,
+  "conversation_history_redaction": {
+    "enabled": false,
+    "entities": []
+  },
+  "user_memory": {
+    "enabled": false,
+    "scale": "balanced"
+  }
+}
+OK: record_voice is false

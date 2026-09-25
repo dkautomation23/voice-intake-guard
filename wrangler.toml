@@ -1,0 +1,6 @@
+name = "voice-intake-guard"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+# Secrets are set with `wrangler secret put`, never written here:
+# TWILIO_AUTH_TOKEN, ELEVENLABS_API_KEY, ELEVENLABS_AGENT_ID, FALLBACK_PHONE

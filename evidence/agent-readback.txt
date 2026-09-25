@@ -1,0 +1,2 @@
+# GET /v1/convai/agents/<id>, 25.09.2026, after setup
+record_voice=False retention_days=1 output=ulaw_8000 input=ulaw_8000
