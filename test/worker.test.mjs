@@ -70,12 +70,15 @@ test("agent error sends the caller to a person", async () => {
 test("agent that never answers sends the caller to a person", async () => {
   const restore = agentReplies((_, init) => new Promise((_, reject) =>
     init.signal.addEventListener("abort", () => reject(init.signal.reason))));
+  // AbortSignal.timeout does not keep Node's event loop alive; without a
+  // referenced timer Node 22 ends the run before the 3 s timeout can fire.
+  const keepAlive = setTimeout(() => {}, 5000);
   try {
     const started = Date.now();
     const body = await (await call(params, sign(params))).text();
     assert.match(body, /<Dial>/);
     assert.ok(Date.now() - started < 4000, "gave up within the timeout");
-  } finally { restore(); }
+  } finally { clearTimeout(keepAlive); restore(); }
 });
 
 test("a non-TwiML answer from the agent is not trusted", async () => {
